@@ -118,6 +118,33 @@ body {
   transition: all var(--transition-normal);
 }
 
+/* ===== Utility Classes ===== */
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.flex-center {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
 /* ===== Loading Screen ===== */
 .loading-screen {
   position: fixed;

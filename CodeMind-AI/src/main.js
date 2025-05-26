@@ -168,7 +168,19 @@ class CodeMindApp {
     this.elements.toggleTerminal?.addEventListener('click', () => this.toggleTerminal());
     
     // Settings panel
-    this.elements.closeSettings?.addEventListener('click', () => this.closeSettings());
+    this.elements.closeSettings?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Close settings button clicked');
+      this.closeSettings();
+    });
+    
+    // Close settings with overlay click
+    this.elements.overlay?.addEventListener('click', (e) => {
+      if (e.target === this.elements.overlay) {
+        this.closeSettings();
+      }
+    });
     this.elements.toggleApiKey?.addEventListener('click', () => this.toggleApiKeyVisibility());
     this.elements.saveSettings?.addEventListener('click', () => this.saveSettings());
     this.elements.testConnection?.addEventListener('click', () => this.testConnection());
@@ -199,8 +211,7 @@ class CodeMindApp {
       tab.addEventListener('click', (e) => this.switchEditorTab(e.target.dataset.file));
     });
     
-    // Overlay
-    this.elements.overlay?.addEventListener('click', () => this.closeAllModals());
+    // Overlay - removed duplicate handler since we have specific one above
     
     // Error boundary
     document.getElementById('reload-app')?.addEventListener('click', () => {
@@ -719,13 +730,27 @@ class CodeMindApp {
 
   // Close settings panel
   closeSettings() {
+    console.log('closeSettings called');
     const panel = this.elements.settingsPanel;
     const overlay = this.elements.overlay;
     
-    if (panel && overlay) {
+    console.log('Panel:', panel);
+    console.log('Overlay:', overlay);
+    
+    if (panel) {
+      console.log('Removing active class from panel');
       panel.classList.remove('active');
+    }
+    
+    if (overlay) {
+      console.log('Adding hidden class to overlay');
       overlay.classList.add('hidden');
     }
+    
+    // Force focus back to main content
+    document.body.focus();
+    
+    this.addTerminalMessage('تم إغلاق لوحة الإعدادات', 'info');
   }
 
   // Load settings to form

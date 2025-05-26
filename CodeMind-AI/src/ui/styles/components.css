@@ -7,10 +7,11 @@
   height: 100vh;
   background: var(--bg-secondary);
   border-left: 1px solid var(--border-color);
-  z-index: 1000;
-  transition: right var(--transition-normal);
+  z-index: 9999;
+  transition: right 0.3s ease-in-out;
   overflow-y: auto;
-  box-shadow: var(--shadow-xl);
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+  max-width: 90vw;
 }
 
 .settings-panel.active {
@@ -21,42 +22,55 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .settings-header {
-  padding: var(--space-lg);
+  padding: 1rem;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: var(--bg-primary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  min-height: 60px;
 }
 
 .settings-header h2 {
   margin: 0;
   color: var(--text-primary);
-  font-size: var(--font-size-xl);
+  font-size: 1.25rem;
+  flex: 1;
 }
 
 .close-btn {
-  background: var(--accent-error);
+  background: #ef4444;
   border: none;
-  border-radius: var(--radius-md);
-  padding: var(--space-sm);
+  border-radius: 6px;
+  padding: 8px;
   color: white;
   cursor: pointer;
-  transition: all var(--transition-fast);
-  font-size: var(--font-size-lg);
-  width: 35px;
-  height: 35px;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 11;
 }
 
 .close-btn:hover {
   background: #dc2626;
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+.close-btn:active {
+  transform: scale(0.95);
 }
 
 .settings-body {
@@ -545,6 +559,11 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
   backdrop-filter: blur(5px);
+  transition: opacity 0.3s ease;
+}
+
+.overlay.hidden {
+  display: none;
 }
 
 /* ===== Error Boundary ===== */
@@ -590,6 +609,17 @@
     width: 100%;
     right: -100%;
   }
+  
+  .settings-header {
+    padding: 0.75rem;
+  }
+  
+  .close-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+}
   
   .browser-window {
     top: 5%;

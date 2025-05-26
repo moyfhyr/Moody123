@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 CodeMind AI - الوكيل الذكي</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 40px;
+        }
+
+        .chat-container {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #e2e8f0;
+        }
+
+        .welcome-message {
+            color: #4a5568;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: white;
+        }
+
+        .theme-btn {
+            position: fixed;
+            top: 20px;
+            left: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        .status-dot.connected {
+            background: #10b981;
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* Settings Modal */
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .settings-modal.active {
+            display: flex;
+        }
+
+        .settings-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .settings-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .close-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+        }
+
+        .setting-group h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .setting-item {
+            margin-bottom: 15px;
+        }
+
+        .setting-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        .setting-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .setting-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .save-btn {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-btn, .theme-btn {
+                top: 10px;
+            }
+
+            .settings-btn {
+                left: 10px;
+            }
+
+            .theme-btn {
+                left: 70px;
+            }
+
+            .status-indicator {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Dark Theme */
+        body.dark {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        }
+
+        body.dark .container {
+            background: rgba(45, 55, 72, 0.95);
+            color: white;
+        }
+
+        body.dark .title {
+            color: white;
+        }
+
+        body.dark .subtitle {
+            color: #a0aec0;
+        }
+
+        body.dark .chat-container {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+
+        body.dark .welcome-message {
+            color: #e2e8f0;
+        }
+
+        body.dark .chat-input {
+            background: #4a5568;
+            border-color: #718096;
+            color: white;
+        }
+
+        body.dark .action-btn {
+            background: #4a5568;
+            border-color: #718096;
+            color: white;
+        }
+
+        body.dark .settings-content {
+            background: #2d3748;
+            color: white;
+        }
+
+        body.dark .setting-input {
+            background: #4a5568;
+            border-color: #718096;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Settings Button -->
+    <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+    
+    <!-- Theme Toggle -->
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+    
+    <!-- Status Indicator -->
+    <div class="status-indicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">غير متصل</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="logo">🤖</div>
+        <h1 class="title">CodeMind AI</h1>
+        <p class="subtitle">مرحباً بك في CodeMind AI! 👋</p>
+        
+        <!-- Chat Container -->
+        <div class="chat-container" id="chatContainer">
+            <div class="welcome-message">
+                <p>أنا وكيل ذكاء اصطناعي متقدم يمكنني مساعدتك في:</p>
+                <br>
+                <p>🔍 البحث في الإنترنت وتحليل المواقع</p>
+                <p>💻 إنشاء مواقع وتطبيقات ويب</p>
+                <p>🛠️ كتابة وتحليل الكود البرمجي</p>
+                <p>📊 جمع وتحليل البيانات</p>
+                <br>
+                <p><strong>لبدء الاستخدام، يرجى إدخال مفتاح Gemini API في الإعدادات.</strong></p>
+            </div>
+        </div>
+
+        <!-- Input Container -->
+        <div class="input-container">
+            <input type="text" class="chat-input" id="chatInput" 
+                   placeholder="اكتب رسالتك هنا... (مثال: اكتب لي موقع بسيط)"
+                   disabled>
+            <button class="send-btn" id="sendBtn" disabled onclick="sendMessage()">📤</button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="action-btn" onclick="quickAction('search')">
+                🔍 البحث في الإنترنت
+            </button>
+            <button class="action-btn" onclick="quickAction('create')">
+                💻 إنشاء مشروع
+            </button>
+            <button class="action-btn" onclick="quickAction('question')">
+                ❓ طرح سؤال
+            </button>
+            <button class="action-btn" onclick="quickAction('code')">
+                🛠️ تحليل الكود
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h2 class="settings-title">⚙️ الإعدادات</h2>
+                <button class="close-btn" onclick="toggleSettings()">✕</button>
+            </div>
+
+            <div class="setting-group">
+                <h3>🔑 إعدادات API</h3>
+                <div class="setting-item">
+                    <label for="apiKey">مفتاح Gemini API:</label>
+                    <input type="password" id="apiKey" class="setting-input" 
+                           placeholder="أدخل مفتاح API هنا...">
+                </div>
+                <div class="setting-item">
+                    <label for="aiModel">النموذج:</label>
+                    <select id="aiModel" class="setting-input">
+                        <option value="gemini-1.5-flash">Gemini 1.5 Flash (أسرع)</option>
+                        <option value="gemini-1.5-pro">Gemini 1.5 Pro (أفضل جودة)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <h3>🎛️ الإعدادات العامة</h3>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="autoScroll" checked> التمرير التلقائي للرسائل
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="soundEffects"> تأثيرات صوتية
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="saveHistory" checked> حفظ تاريخ المحادثات
+                    </label>
+                </div>
+            </div>
+
+            <button class="save-btn" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+        </div>
+    </div>
+
+    <script>
+        let apiKey = '';
+        let isConnected = false;
+        let chatHistory = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            updateConnectionStatus();
+            
+            // Enter key support
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        });
+
+        // Toggle Settings
+        function toggleSettings() {
+            const modal = document.getElementById('settingsModal');
+            modal.classList.toggle('active');
+        }
+
+        // Toggle Theme
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const themeBtn = document.querySelector('.theme-btn');
+            themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        // Load Settings
+        function loadSettings() {
+            const savedApiKey = localStorage.getItem('apiKey');
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedApiKey) {
+                document.getElementById('apiKey').value = savedApiKey;
+                apiKey = savedApiKey;
+                updateConnectionStatus();
+            }
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                document.querySelector('.theme-btn').textContent = '☀️';
+            }
+        }
+
+        // Save Settings
+        function saveSettings() {
+            const newApiKey = document.getElementById('apiKey').value.trim();
+            
+            if (newApiKey) {
+                apiKey = newApiKey;
+                localStorage.setItem('apiKey', apiKey);
+                updateConnectionStatus();
+                toggleSettings();
+                showNotification('تم حفظ الإعدادات بنجاح! ✅', 'success');
+            } else {
+                showNotification('يرجى إدخال مفتاح API صحيح', 'error');
+            }
+        }
+
+        // Update Connection Status
+        function updateConnectionStatus() {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            
+            if (apiKey) {
+                isConnected = true;
+                statusDot.classList.add('connected');
+                statusText.textContent = 'متصل';
+                chatInput.disabled = false;
+                sendBtn.disabled = false;
+                chatInput.placeholder = 'اكتب رسالتك هنا...';
+            } else {
+                isConnected = false;
+                statusDot.classList.remove('connected');
+                statusText.textContent = 'غير متصل';
+                chatInput.disabled = true;
+                sendBtn.disabled = true;
+                chatInput.placeholder = 'يرجى إدخال مفتاح API في الإعدادات أولاً';
+            }
+        }
+
+        // Send Message
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message || !isConnected) return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                addMessage('مرحباً! تم استلام رسالتك. هذا مثال على رد الذكاء الاصطناعي. 🤖', 'ai');
+            }, 1000);
+        }
+
+        // Add Message to Chat
+        function addMessage(message, sender) {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            // Clear welcome message on first message
+            if (chatHistory.length === 0) {
+                chatContainer.innerHTML = '';
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                margin-bottom: 15px;
+                padding: 12px 16px;
+                border-radius: 15px;
+                max-width: 80%;
+                word-wrap: break-word;
+                ${sender === 'user' ? 
+                    'background: linear-gradient(45deg, #667eea, #764ba2); color: white; margin-left: auto; text-align: right;' : 
+                    'background: #f1f5f9; color: #2d3748; margin-right: auto; text-align: left;'
+                }
+            `;
+            
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            
+            // Auto scroll
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            chatHistory.push({message, sender, timestamp: new Date()});
+        }
+
+        // Quick Actions
+        function quickAction(action) {
+            if (!isConnected) {
+                showNotification('يرجى إدخال مفتاح API في الإعدادات أولاً', 'error');
+                return;
+            }
+            
+            const actions = {
+                search: 'ابحث لي عن معلومات حول الذكاء الاصطناعي',
+                create: 'أنشئ لي موقع ويب بسيط باستخدام HTML و CSS',
+                question: 'ما هي أفضل لغات البرمجة للمبتدئين؟',
+                code: 'اشرح لي هذا الكود: console.log("Hello World");'
+            };
+            
+            const input = document.getElementById('chatInput');
+            input.value = actions[action];
+            sendMessage();
+        }
+
+        // Show Notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-weight: 600;
+                z-index: 10000;
+                animation: slideDown 0.3s ease;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Close modal on outside click
+        document.getElementById('settingsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleSettings();
+            }
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

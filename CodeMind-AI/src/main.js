@@ -210,6 +210,13 @@ class CodeMindApp {
     // Global error handler
     window.addEventListener('error', (e) => this.handleGlobalError(e));
     window.addEventListener('unhandledrejection', (e) => this.handleGlobalError(e));
+    
+    // Escape key to close modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeAllModals();
+      }
+    });
   }
 
   // Setup agent event listeners
@@ -902,12 +909,7 @@ class CodeMindApp {
     }
   }
 
-  // Close all modals
-  closeAllModals() {
-    this.closeSettings();
-    this.closeBrowser();
-    this.closeProjectStudio();
-  }
+
 
   // Close browser
   closeBrowser() {

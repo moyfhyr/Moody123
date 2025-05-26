@@ -5,7 +5,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 12000,
     cors: true,
-    allowedHosts: ['work-1-wcanbphwerymqpxm.prod-runtime.all-hands.dev', 'localhost', '127.0.0.1'],
+    allowedHosts: ['work-1-iglohtlhgdkjqkdx.prod-runtime.all-hands.dev', 'work-1-wcanbphwerymqpxm.prod-runtime.all-hands.dev', 'localhost', '127.0.0.1'],
     headers: {
       'X-Frame-Options': 'ALLOWALL',
       'Access-Control-Allow-Origin': '*'

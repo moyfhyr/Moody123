@@ -854,21 +854,7 @@ class CodeMindApp {
     }
   }
 
-  // Close settings panel
-  closeSettings() {
-    const settingsPanel = this.elements.settingsPanel;
-    const overlay = this.elements.overlay;
-    
-    if (settingsPanel) {
-      settingsPanel.classList.remove('active');
-    }
-    
-    // Only hide overlay if no other modals are open
-    if (overlay && this.elements.browserWindow?.classList.contains('hidden') && 
-        this.elements.projectStudio?.classList.contains('hidden')) {
-      overlay.classList.add('hidden');
-    }
-  }
+
 
   // Close all modals
   closeAllModals() {

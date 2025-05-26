@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMind AI - الوكيل الذكي المتقدم</title>
+    
+    <!-- Professional Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Professional Styles -->
+    <style>
+        /* ===== PROFESSIONAL AI INTERFACE ===== */
+        :root {
+            --bg-primary: #212121;
+            --bg-secondary: #2f2f2f;
+            --bg-chat: #343541;
+            --bg-user: #444654;
+            --bg-assistant: #343541;
+            --bg-sidebar: #202123;
+            --bg-input: #40414f;
+            --bg-hover: #2a2b32;
+            
+            --text-primary: #ececf1;
+            --text-secondary: #c5c5d2;
+            --text-muted: #8e8ea0;
+            --text-accent: #19c37d;
+            
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-medium: rgba(255, 255, 255, 0.2);
+            
+            --accent-green: #19c37d;
+            --accent-blue: #0084ff;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #ff8c00;
+            --accent-red: #ef4444;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7f7f8;
+            --bg-chat: #ffffff;
+            --bg-user: #f7f7f8;
+            --bg-assistant: #ffffff;
+            --bg-sidebar: #f7f7f8;
+            --bg-input: #ffffff;
+            --bg-hover: #f0f0f0;
+            
+            --text-primary: #343541;
+            --text-secondary: #565869;
+            --text-muted: #8e8ea0;
+            --text-accent: #19c37d;
+            
+            --border-light: rgba(0, 0, 0, 0.1);
+            --border-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== LAYOUT ===== */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .new-chat-btn {
+            width: 100%;
+            padding: 12px 16px;
+            background: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .new-chat-btn:hover {
+            background: var(--bg-hover);
+        }
+
+        .chat-history {
+            flex: 1;
+            padding: 16px 8px;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            padding: 12px 16px;
+            margin: 2px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-item:hover {
+            background: var(--bg-hover);
+        }
+
+        .chat-item.active {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .user-menu:hover {
+            background: var(--bg-hover);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-chat);
+        }
+
+        .chat-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-primary);
+        }
+
+        .model-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .header-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* ===== CHAT AREA ===== */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 768px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .message {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .message.user {
+            background: var(--bg-user);
+            margin: 0 -24px 24px -24px;
+            padding: 24px;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+
+        .message.user .message-avatar {
+            background: var(--accent-purple);
+            color: white;
+        }
+
+        .message.assistant .message-avatar {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .message-content {
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .message-content p {
+            margin-bottom: 12px;
+        }
+
+        .message-content pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        .message-content code {
+            background: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+        }
+
+        /* ===== TYPING INDICATOR ===== */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ===== INPUT AREA ===== */
+        .input-area {
+            padding: 24px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .input-container {
+            position: relative;
+            max-width: 768px;
+            margin: 0 auto;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 12px 16px;
+            min-height: 52px;
+        }
+
+        .message-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.5;
+            resize: none;
+            max-height: 200px;
+            font-family: inherit;
+        }
+
+        .message-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .send-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--accent-green);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .send-btn:hover {
+            background: #16a085;
+        }
+
+        .send-btn:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        /* ===== AI ASSISTANT AVATAR ===== */
+        .ai-assistant-float {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .ai-assistant-float:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-assistant-float.thinking {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ===== WELCOME SCREEN ===== */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+            text-align: center;
+        }
+
+        .welcome-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .quick-action {
+            padding: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: right;
+        }
+
+        .quick-action:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-medium);
+        }
+
+        .quick-action-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .quick-action-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .quick-action-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -260px;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .ai-assistant-float {
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .chat-messages {
+                padding: 16px;
+            }
+
+            .message.user {
+                margin: 0 -16px 24px -16px;
+                padding: 16px;
+            }
+
+            .input-area {
+                padding: 16px;
+            }
+
+            .welcome-screen {
+                padding: 24px 16px;
+            }
+
+            .welcome-title {
+                font-size: 24px;
+            }
+
+            .welcome-subtitle {
+                font-size: 16px;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-light);
+            border-top: 3px solid var(--accent-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .loading-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-medium);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2 class="loading-title">جاري تحميل CodeMind AI</h2>
+            <p class="loading-subtitle">يتم تهيئة النظام الذكي...</p>
+        </div>
+    </div>
+
+    <!-- AI Assistant Float -->
+    <div class="ai-assistant-float" id="aiAssistant">
+        <span id="aiEmoji">🤖</span>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn" id="newChatBtn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    محادثة جديدة
+                </button>
+            </div>
+
+            <div class="chat-history" id="chatHistory">
+                <div class="chat-item active">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    مرحباً بك في CodeMind AI
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-menu">
+                    <div class="user-avatar">م</div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 500;">المستخدم</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">مطور</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="chat-header">
+                <div class="model-selector" id="modelSelector">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                    </svg>
+                    <span>CodeMind AI Pro</span>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+
+                <div class="header-actions">
+                    <button class="header-btn" id="themeToggle" title="تبديل المظهر">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <button class="header-btn" id="settingsBtn" title="الإعدادات">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Container -->
+            <div class="chat-container">
+                <!-- Welcome Screen -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-logo">🤖</div>
+                    <h1 class="welcome-title">مرحباً بك في CodeMind AI</h1>
+                    <p class="welcome-subtitle">
+                        الوكيل الذكي المتقدم للبرمجة والتطوير. يمكنني مساعدتك في إنشاء المشاريع، كتابة الكود، حل المشاكل التقنية، والكثير أكثر.
+                    </p>
+
+                    <div class="quick-actions">
+                        <div class="quick-action" data-action="new-project">
+                            <span class="quick-action-icon">🚀</span>
+                            <h3 class="quick-action-title">إنشاء مشروع جديد</h3>
+                            <p class="quick-action-desc">ابدأ مشروع برمجي جديد بمساعدة الذكاء الاصطناعي</p>
+                        </div>
+
+                        <div class="quick-action" data-action="code-review">
+                            <span class="quick-action-icon">🔍</span>
+                            <h3 class="quick-action-title">مراجعة الكود</h3>
+                            <p class="quick-action-desc">احصل على تحليل وتحسينات لكودك البرمجي</p>
+                        </div>
+
+                        <div class="quick-action" data-action="debug-help">
+                            <span class="quick-action-icon">🐛</span>
+                            <h3 class="quick-action-title">إصلاح الأخطاء</h3>
+                            <p class="quick-action-desc">ساعدني في العثور على الأخطاء وإصلاحها</p>
+                        </div>
+
+                        <div class="quick-action" data-action="learn-tech">
+                            <span class="quick-action-icon">📚</span>
+                            <h3 class="quick-action-title">تعلم تقنية جديدة</h3>
+                            <p class="quick-action-desc">اكتشف واتعلم تقنيات البرمجة الحديثة</p>
+                        </div>
+
+                        <div class="quick-action" data-action="workflow-demo" onclick="window.open('workflow-demo.html', '_blank')">
+                            <span class="quick-action-icon">⚡</span>
+                            <h3 class="quick-action-title">نظام Workflow الذكي</h3>
+                            <p class="quick-action-desc">شاهد العرض العمودي التفاعلي للخطوات مع الوكيل الذكي</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div class="chat-messages" id="chatMessages" style="display: none;">
+                    <!-- Messages will be added here dynamically -->
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <textarea 
+                            class="message-input" 
+                            id="messageInput" 
+                            placeholder="اكتب رسالتك هنا... (مثال: اكتب لي موقع ويب بسيط)"
+                            rows="1"
+                            disabled
+                        ></textarea>
+                        <button class="send-btn" id="sendBtn" disabled>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enhanced Workflow Styles -->
+    <link rel="stylesheet" href="src/enhanced-workflow.css">
+    
+    <!-- Professional JavaScript -->
+    <script src="src/professional-app.js"></script>
+    <script src="src/enhanced-ai-system.js"></script>
+    
+    <!-- AI Assistant Float -->
+    <div class="ai-assistant-float" id="aiAssistant">🤖</div>
+</body>
+</html>

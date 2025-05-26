@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 CodeMind AI - الوكيل الذكي المتقدم</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="src/modern-ui.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+</head>
+<body>
+    <!-- AI Assistant Character -->
+    <div class="ai-assistant" id="aiAssistant" data-tooltip="المساعد الذكي">
+        <span id="aiEmoji">🤖</span>
+    </div>
+
+    <!-- Modern Header -->
+    <header class="modern-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">🤖</div>
+                <div class="logo-text">
+                    <h1>CodeMind AI</h1>
+                    <p>الوكيل الذكي المتقدم</p>
+                </div>
+            </div>
+            
+            <nav class="nav-toolbar">
+                <button class="nav-button" id="sidebarToggle" data-tooltip="القائمة">
+                    <span class="nav-button-icon">☰</span>
+                    <span>القائمة</span>
+                </button>
+                
+                <button class="nav-button" id="searchBtn" data-tooltip="البحث">
+                    <span class="nav-button-icon">🔍</span>
+                    <span>البحث</span>
+                </button>
+                
+                <button class="nav-button" id="projectsBtn" data-tooltip="المشاريع">
+                    <span class="nav-button-icon">📁</span>
+                    <span>المشاريع</span>
+                </button>
+                
+                <button class="nav-button" id="terminalBtn" data-tooltip="سطر الأوامر">
+                    <span class="nav-button-icon">💻</span>
+                    <span>Terminal</span>
+                </button>
+                
+                <button class="nav-button" id="settingsBtn" data-tooltip="الإعدادات">
+                    <span class="nav-button-icon">⚙️</span>
+                    <span>الإعدادات</span>
+                </button>
+                
+                <button class="nav-button" id="themeToggle" data-tooltip="تبديل المظهر">
+                    <span class="nav-button-icon" id="themeIcon">🌙</span>
+                </button>
+                
+                <div class="status-indicator" id="connectionStatus">
+                    <span class="status-dot"></span>
+                    <span id="statusText">غير متصل</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Modern Sidebar -->
+    <aside class="modern-sidebar" id="modernSidebar">
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">الوظائف الرئيسية</h3>
+            <a href="#chat" class="sidebar-item active" data-section="chat">
+                <span class="sidebar-icon">💬</span>
+                <span>المحادثة الذكية</span>
+            </a>
+            <a href="#search" class="sidebar-item" data-section="search">
+                <span class="sidebar-icon">🔍</span>
+                <span>البحث المتقدم</span>
+            </a>
+            <a href="#projects" class="sidebar-item" data-section="projects">
+                <span class="sidebar-icon">📁</span>
+                <span>إدارة المشاريع</span>
+            </a>
+            <a href="#code" class="sidebar-item" data-section="code">
+                <span class="sidebar-icon">💻</span>
+                <span>محرر الكود</span>
+            </a>
+        </div>
+        
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">الأدوات</h3>
+            <a href="#terminal" class="sidebar-item" data-section="terminal">
+                <span class="sidebar-icon">⚡</span>
+                <span>سطر الأوامر</span>
+            </a>
+            <a href="#analysis" class="sidebar-item" data-section="analysis">
+                <span class="sidebar-icon">📊</span>
+                <span>تحليل البيانات</span>
+            </a>
+            <a href="#email" class="sidebar-item" data-section="email">
+                <span class="sidebar-icon">📬</span>
+                <span>البريد الإلكتروني</span>
+            </a>
+            <a href="#ai-tools" class="sidebar-item" data-section="ai-tools">
+                <span class="sidebar-icon">🧠</span>
+                <span>أدوات الذكاء الاصطناعي</span>
+            </a>
+        </div>
+        
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">الإعدادات</h3>
+            <a href="#settings" class="sidebar-item" data-section="settings">
+                <span class="sidebar-icon">⚙️</span>
+                <span>الإعدادات العامة</span>
+            </a>
+            <a href="#help" class="sidebar-item" data-section="help">
+                <span class="sidebar-icon">❓</span>
+                <span>المساعدة</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Container -->
+    <main class="main-container" id="mainContainer">
+        <div class="content-wrapper">
+            
+            <!-- Welcome Section -->
+            <section id="welcomeSection" class="content-section active">
+                <div class="modern-card">
+                    <div class="card-header">
+                        <div class="card-icon">🚀</div>
+                        <div>
+                            <h2 class="card-title">مرحباً بك في CodeMind AI</h2>
+                            <p class="card-subtitle">الوكيل الذكي المتقدم للبرمجة والتطوير</p>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-bottom: 2rem; color: var(--text-secondary); line-height: 1.8;">
+                        أنا وكيل ذكاء اصطناعي متقدم مصمم خصيصاً لمساعدتك في جميع مهام البرمجة والتطوير. 
+                        يمكنني مساعدتك في إنشاء المشاريع، كتابة الكود، حل المشاكل التقنية، والكثير أكثر.
+                    </p>
+                    
+                    <div class="quick-actions">
+                        <a href="#" class="quick-action" data-action="new-project">
+                            <span class="quick-action-icon">🆕</span>
+                            <h3 class="quick-action-title">مشروع جديد</h3>
+                            <p class="quick-action-desc">ابدأ مشروع برمجي جديد بمساعدة الذكاء الاصطناعي</p>
+                        </a>
+                        
+                        <a href="#" class="quick-action" data-action="code-review">
+                            <span class="quick-action-icon">🔍</span>
+                            <h3 class="quick-action-title">مراجعة الكود</h3>
+                            <p class="quick-action-desc">احصل على تحليل وتحسينات لكودك البرمجي</p>
+                        </a>
+                        
+                        <a href="#" class="quick-action" data-action="debug-help">
+                            <span class="quick-action-icon">🐛</span>
+                            <h3 class="quick-action-title">إصلاح الأخطاء</h3>
+                            <p class="quick-action-desc">ساعدني في العثور على الأخطاء وإصلاحها</p>
+                        </a>
+                        
+                        <a href="#" class="quick-action" data-action="learn-tech">
+                            <span class="quick-action-icon">📚</span>
+                            <h3 class="quick-action-title">تعلم تقنية جديدة</h3>
+                            <p class="quick-action-desc">اكتشف واتعلم تقنيات البرمجة الحديثة</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Section -->
+            <section id="chatSection" class="content-section">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="card-header">
+                            <div class="card-icon">💬</div>
+                            <div>
+                                <h3 class="card-title">المحادثة الذكية</h3>
+                                <p class="card-subtitle">تحدث مع الوكيل الذكي</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                <p>مرحباً! أنا CodeMind AI، مساعدك الذكي للبرمجة والتطوير. كيف يمكنني مساعدتك اليوم؟</p>
+                                <div class="message-time" id="welcomeTime"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <div class="chat-input-wrapper">
+                            <textarea 
+                                class="chat-input" 
+                                id="messageInput" 
+                                placeholder="اكتب رسالتك هنا... (مثال: اكتب لي موقع ويب بسيط)"
+                                rows="1"
+                                disabled
+                            ></textarea>
+                            <button class="send-button" id="sendButton" disabled data-tooltip="إرسال">
+                                <span>📤</span>
+                            </button>
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                            💡 نصيحة: اكتب أوامر واضحة ومحددة للحصول على أفضل النتائج
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Terminal Section -->
+            <section id="terminalSection" class="content-section">
+                <div class="modern-card">
+                    <div class="card-header">
+                        <div class="card-icon">💻</div>
+                        <div>
+                            <h3 class="card-title">سطر الأوامر المتقدم</h3>
+                            <p class="card-subtitle">تنفيذ الأوامر والسكريبتات</p>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <button class="modern-btn secondary" id="clearTerminal">مسح</button>
+                            <button class="modern-btn secondary" id="toggleTerminal">إخفاء</button>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #0a0a0a; border-radius: 8px; padding: 1rem; font-family: 'Courier New', monospace; min-height: 300px; color: #00ff00;">
+                        <div id="terminalOutput">
+                            <div style="color: #00ff00;">CodeMind AI Terminal v1.0</div>
+                            <div style="color: #888;">نظام جاهز للاستخدام...</div>
+                            <div style="margin-top: 1rem;">
+                                <span style="color: #00ff00;">user@codemind:~$</span>
+                                <span style="color: #fff; margin-left: 0.5rem;">_</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settingsSection" class="content-section">
+                <div class="modern-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚙️</div>
+                        <div>
+                            <h3 class="card-title">الإعدادات المتقدمة</h3>
+                            <p class="card-subtitle">تخصيص تجربة الاستخدام</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; gap: 2rem;">
+                        <!-- API Settings -->
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--text-primary);">🔑 إعدادات API</h4>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">مفتاح Gemini API:</label>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="password" class="modern-input" id="apiKeyInput" placeholder="أدخل مفتاح API هنا..." style="flex: 1;">
+                                    <button class="modern-btn secondary" id="toggleApiKey" data-tooltip="إظهار/إخفاء">👁️</button>
+                                </div>
+                                <small style="color: var(--text-muted);">
+                                    احصل على مفتاح مجاني من 
+                                    <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: var(--text-accent);">Google AI Studio</a>
+                                </small>
+                            </div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">النموذج:</label>
+                                <select class="modern-input" id="modelSelect">
+                                    <option value="gemini-1.5-pro">Gemini 1.5 Pro (أفضل جودة)</option>
+                                    <option value="gemini-1.5-flash" selected>Gemini 1.5 Flash (أسرع)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- General Settings -->
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--text-primary);">🎛️ الإعدادات العامة</h4>
+                            <div style="display: grid; gap: 1rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" id="autoScroll" checked style="margin: 0;">
+                                    <span>التمرير التلقائي للرسائل</span>
+                                </label>
+                                
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" id="soundEffects" style="margin: 0;">
+                                    <span>تأثيرات صوتية</span>
+                                </label>
+                                
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" id="saveHistory" checked style="margin: 0;">
+                                    <span>حفظ تاريخ المحادثات</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Advanced Settings -->
+                        <div>
+                            <h4 style="margin-bottom: 1rem; color: var(--text-primary);">🔧 إعدادات متقدمة</h4>
+                            <div style="display: grid; gap: 1rem;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">
+                                        الحد الأقصى للرموز: <span id="maxTokensValue">2048</span>
+                                    </label>
+                                    <input type="range" id="maxTokensSlider" min="100" max="8192" value="2048" 
+                                           style="width: 100%; accent-color: var(--text-accent);">
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">
+                                        مستوى الإبداع: <span id="temperatureValue">0.7</span>
+                                    </label>
+                                    <input type="range" id="temperatureSlider" min="0" max="2" step="0.1" value="0.7" 
+                                           style="width: 100%; accent-color: var(--text-accent);">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                            <button class="modern-btn secondary" id="resetSettings">🔄 إعادة تعيين</button>
+                            <button class="modern-btn" id="testConnection">🔌 اختبار الاتصال</button>
+                            <button class="modern-btn" id="saveSettings">💾 حفظ الإعدادات</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>جاري تحميل CodeMind AI...</h2>
+            <p>يتم تهيئة النظام الذكي</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/modern-app.js"></script>
+</body>
+</html>

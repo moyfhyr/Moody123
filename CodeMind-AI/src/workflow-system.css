@@ -1,0 +1,629 @@
+/* 
+=================================================================
+🎯 نظام العرض العمودي للخطوات (Vertical Workflow System)
+=================================================================
+هذا الملف يحتوي على تصميم نظام العرض العمودي للخطوات الذكية
+يُظهر سير العمل بشكل تفاعلي وواقعي مثل الأنظمة المتقدمة
+=================================================================
+*/
+
+/* 
+📋 المتغيرات الأساسية للنظام
+================================
+تحديد الألوان والمقاسات المستخدمة في نظام Workflow
+*/
+:root {
+    /* ألوان النظام الأساسية */
+    --workflow-primary: #19c37d;        /* اللون الأخضر الأساسي */
+    --workflow-secondary: #2d3748;      /* اللون الرمادي الداكن */
+    --workflow-background: #1a202c;     /* خلفية النظام */
+    --workflow-card-bg: #2d3748;        /* خلفية البطاقات */
+    --workflow-text-primary: #ffffff;   /* النص الأساسي */
+    --workflow-text-secondary: #a0aec0; /* النص الثانوي */
+    --workflow-border: #4a5568;         /* لون الحدود */
+    --workflow-success: #48bb78;        /* لون النجاح */
+    --workflow-warning: #ed8936;        /* لون التحذير */
+    --workflow-error: #f56565;          /* لون الخطأ */
+    --workflow-thinking: #667eea;       /* لون حالة التفكير */
+    
+    /* مقاسات النظام */
+    --workflow-step-height: 120px;      /* ارتفاع كل خطوة */
+    --workflow-connector-width: 4px;    /* عرض الخط الواصل */
+    --workflow-icon-size: 48px;         /* حجم الأيقونات */
+    --workflow-border-radius: 12px;     /* انحناء الزوايا */
+    
+    /* تأثيرات الحركة */
+    --workflow-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --workflow-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 
+🎨 الحاوي الرئيسي لنظام Workflow
+=====================================
+يحتوي على جميع الخطوات والعناصر التفاعلية
+*/
+.workflow-container {
+    /* التخطيط الأساسي */
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 20px;
+    background: var(--workflow-background);
+    border-radius: var(--workflow-border-radius);
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    /* تأثيرات بصرية */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--workflow-border);
+    
+    /* الحركة والتفاعل */
+    transition: var(--workflow-transition);
+}
+
+/* 
+📊 عنوان نظام Workflow
+========================
+يُظهر عنوان المشروع أو المهمة الحالية
+*/
+.workflow-header {
+    /* التخطيط */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--workflow-border);
+    
+    /* النص */
+    color: var(--workflow-text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.workflow-title {
+    /* تنسيق العنوان */
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--workflow-primary);
+    margin: 0;
+    
+    /* تأثير متدرج للنص */
+    background: linear-gradient(135deg, var(--workflow-primary), #4fd1c7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.workflow-status {
+    /* حالة النظام */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(25, 195, 125, 0.1);
+    border: 1px solid var(--workflow-primary);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--workflow-primary);
+}
+
+/* 
+🔗 الخط الواصل العمودي
+========================
+الخط الذي يربط بين جميع الخطوات
+*/
+.workflow-connector {
+    /* الموقع والحجم */
+    position: absolute;
+    left: 50px;
+    top: 120px;
+    bottom: 120px;
+    width: var(--workflow-connector-width);
+    
+    /* التصميم */
+    background: linear-gradient(
+        to bottom,
+        var(--workflow-primary) 0%,
+        var(--workflow-thinking) 50%,
+        var(--workflow-border) 100%
+    );
+    border-radius: 2px;
+    
+    /* تأثير الإضاءة */
+    box-shadow: 0 0 20px rgba(25, 195, 125, 0.3);
+    
+    /* الحركة */
+    transition: var(--workflow-transition);
+}
+
+/* 
+📋 خطوة واحدة في النظام
+=========================
+كل خطوة تحتوي على أيقونة، عنوان، وصف، وحالة
+*/
+.workflow-step {
+    /* التخطيط الأساسي */
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    
+    /* التصميم */
+    background: var(--workflow-card-bg);
+    border: 1px solid var(--workflow-border);
+    border-radius: var(--workflow-border-radius);
+    
+    /* تأثيرات بصرية */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(5px);
+    
+    /* الحركة والتفاعل */
+    transition: var(--workflow-transition);
+    cursor: pointer;
+}
+
+/* تأثير التمرير على الخطوة */
+.workflow-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: var(--workflow-primary);
+}
+
+/* 
+🎯 أيقونة الخطوة
+================
+تُظهر نوع العملية (تفكير، إنشاء ملف، تحليل، إلخ)
+*/
+.workflow-step-icon {
+    /* الحجم والموقع */
+    width: var(--workflow-icon-size);
+    height: var(--workflow-icon-size);
+    min-width: var(--workflow-icon-size);
+    
+    /* التصميم */
+    background: var(--workflow-primary);
+    border-radius: 50%;
+    
+    /* المحتوى */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* تأثيرات بصرية */
+    box-shadow: 0 4px 15px rgba(25, 195, 125, 0.3);
+    position: relative;
+    z-index: 2;
+    
+    /* الحركة */
+    transition: var(--workflow-transition);
+}
+
+/* أيقونات SVG داخل الدائرة */
+.workflow-step-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    transition: var(--workflow-transition);
+}
+
+/* تأثير النبض للأيقونة النشطة */
+.workflow-step.active .workflow-step-icon {
+    animation: workflow-pulse 2s infinite;
+}
+
+@keyframes workflow-pulse {
+    0% { box-shadow: 0 4px 15px rgba(25, 195, 125, 0.3); }
+    50% { box-shadow: 0 4px 25px rgba(25, 195, 125, 0.6); }
+    100% { box-shadow: 0 4px 15px rgba(25, 195, 125, 0.3); }
+}
+
+/* 
+📝 محتوى الخطوة
+================
+يحتوي على العنوان، الوصف، والحالة
+*/
+.workflow-step-content {
+    /* التخطيط */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.workflow-step-title {
+    /* تنسيق العنوان */
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--workflow-text-primary);
+    margin: 0;
+    line-height: 1.4;
+    
+    /* تأثير التدرج */
+    background: linear-gradient(135deg, var(--workflow-text-primary), var(--workflow-text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.workflow-step-description {
+    /* تنسيق الوصف */
+    font-size: 14px;
+    color: var(--workflow-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.workflow-step-status {
+    /* حالة الخطوة */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 8px;
+}
+
+/* 
+🎨 حالات مختلفة للخطوات
+==========================
+ألوان وتأثيرات مختلفة حسب حالة كل خطوة
+*/
+
+/* خطوة مكتملة */
+.workflow-step.completed {
+    border-color: var(--workflow-success);
+    background: linear-gradient(135deg, var(--workflow-card-bg), rgba(72, 187, 120, 0.05));
+}
+
+.workflow-step.completed .workflow-step-icon {
+    background: var(--workflow-success);
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.workflow-step.completed .workflow-step-status {
+    color: var(--workflow-success);
+}
+
+/* خطوة نشطة (قيد التنفيذ) */
+.workflow-step.active {
+    border-color: var(--workflow-thinking);
+    background: linear-gradient(135deg, var(--workflow-card-bg), rgba(102, 126, 234, 0.05));
+    animation: workflow-glow 3s ease-in-out infinite;
+}
+
+.workflow-step.active .workflow-step-icon {
+    background: var(--workflow-thinking);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.workflow-step.active .workflow-step-status {
+    color: var(--workflow-thinking);
+}
+
+@keyframes workflow-glow {
+    0%, 100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+    50% { box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2); }
+}
+
+/* خطوة في انتظار */
+.workflow-step.pending {
+    opacity: 0.6;
+    border-color: var(--workflow-border);
+}
+
+.workflow-step.pending .workflow-step-icon {
+    background: var(--workflow-border);
+    box-shadow: 0 4px 15px rgba(74, 85, 104, 0.2);
+}
+
+.workflow-step.pending .workflow-step-status {
+    color: var(--workflow-text-secondary);
+}
+
+/* خطوة بها خطأ */
+.workflow-step.error {
+    border-color: var(--workflow-error);
+    background: linear-gradient(135deg, var(--workflow-card-bg), rgba(245, 101, 101, 0.05));
+}
+
+.workflow-step.error .workflow-step-icon {
+    background: var(--workflow-error);
+    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+
+.workflow-step.error .workflow-step-status {
+    color: var(--workflow-error);
+}
+
+/* 
+🎬 أزرار التحكم
+================
+أزرار كبيرة وجميلة للتحكم في العمليات
+*/
+.workflow-actions {
+    /* التخطيط */
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 20px 0;
+    border-top: 1px solid var(--workflow-border);
+    flex-wrap: wrap;
+}
+
+.workflow-action-btn {
+    /* التصميم الأساسي */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    
+    /* الألوان */
+    background: var(--workflow-primary);
+    color: white;
+    
+    /* تأثيرات بصرية */
+    box-shadow: 0 4px 12px rgba(25, 195, 125, 0.2);
+    
+    /* الحركة */
+    transition: var(--workflow-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+/* تأثير التمرير على الأزرار */
+.workflow-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(25, 195, 125, 0.3);
+    background: #16a085;
+}
+
+/* تأثير الضغط */
+.workflow-action-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(25, 195, 125, 0.2);
+}
+
+/* أيقونات الأزرار */
+.workflow-action-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* أزرار ثانوية */
+.workflow-action-btn.secondary {
+    background: var(--workflow-card-bg);
+    color: var(--workflow-text-primary);
+    border: 1px solid var(--workflow-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.workflow-action-btn.secondary:hover {
+    background: var(--workflow-border);
+    border-color: var(--workflow-primary);
+}
+
+/* 
+🤖 الوكيل الذكي المتحرك
+========================
+شخصية الوكيل التي تُظهر حالات مختلفة
+*/
+.workflow-agent {
+    /* الموقع */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    
+    /* الحجم */
+    width: 80px;
+    height: 80px;
+    
+    /* التصميم */
+    background: linear-gradient(135deg, var(--workflow-primary), #4fd1c7);
+    border-radius: 50%;
+    
+    /* المحتوى */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* تأثيرات بصرية */
+    box-shadow: 0 8px 25px rgba(25, 195, 125, 0.3);
+    cursor: pointer;
+    
+    /* الحركة */
+    transition: var(--workflow-transition);
+    animation: workflow-float 6s ease-in-out infinite;
+}
+
+/* حركة الطفو للوكيل */
+@keyframes workflow-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* تأثير التمرير على الوكيل */
+.workflow-agent:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 12px 30px rgba(25, 195, 125, 0.4);
+}
+
+/* أيقونة الوكيل */
+.workflow-agent svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
+    transition: var(--workflow-transition);
+}
+
+/* حالات مختلفة للوكيل */
+.workflow-agent.thinking {
+    animation: workflow-thinking 2s ease-in-out infinite;
+}
+
+@keyframes workflow-thinking {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.05) rotate(-2deg); }
+    75% { transform: scale(1.05) rotate(2deg); }
+}
+
+.workflow-agent.working {
+    animation: workflow-working 1s linear infinite;
+}
+
+@keyframes workflow-working {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 
+📱 التصميم المتجاوب
+===================
+تحسينات للشاشات المختلفة
+*/
+@media (max-width: 768px) {
+    .workflow-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .workflow-step {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .workflow-connector {
+        left: 30px;
+    }
+    
+    .workflow-actions {
+        flex-direction: column;
+    }
+    
+    .workflow-action-btn {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .workflow-agent {
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .workflow-agent svg {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* 
+🎨 تأثيرات إضافية
+==================
+تحسينات بصرية متقدمة
+*/
+
+/* تأثير الضوء المتحرك */
+.workflow-step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(25, 195, 125, 0.1),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.workflow-step:hover::before {
+    left: 100%;
+}
+
+/* تأثير الجسيمات المتحركة */
+.workflow-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.workflow-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--workflow-primary);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: workflow-particle-float 8s linear infinite;
+}
+
+@keyframes workflow-particle-float {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* 
+🔧 فئات مساعدة
+===============
+فئات CSS مفيدة للتحكم السريع
+*/
+.workflow-hidden { display: none !important; }
+.workflow-visible { display: block !important; }
+.workflow-fade-in { animation: workflow-fade-in 0.5s ease-out; }
+.workflow-fade-out { animation: workflow-fade-out 0.5s ease-out; }
+.workflow-slide-up { animation: workflow-slide-up 0.5s ease-out; }
+.workflow-slide-down { animation: workflow-slide-down 0.5s ease-out; }
+
+@keyframes workflow-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes workflow-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes workflow-slide-up {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes workflow-slide-down {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

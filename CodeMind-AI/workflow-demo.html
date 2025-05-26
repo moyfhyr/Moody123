@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- 
+    =================================================================
+    🤖 صفحة عرض نظام Workflow الذكي
+    =================================================================
+    هذه الصفحة تُظهر نظام العرض العمودي للخطوات التفاعلي
+    مع الوكيل الذكي والتأثيرات البصرية المتقدمة
+    =================================================================
+    -->
+    
+    <!-- 📋 معلومات الصفحة الأساسية -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="نظام العرض العمودي للخطوات الذكية - CodeMind AI">
+    <meta name="keywords" content="ذكاء اصطناعي, workflow, خطوات, تفاعلي, برمجة">
+    <meta name="author" content="CodeMind AI Team">
+    
+    <!-- 🎨 عنوان الصفحة -->
+    <title>🤖 نظام Workflow الذكي - CodeMind AI</title>
+    
+    <!-- 🎨 الخطوط والأيقونات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- 🎨 ملفات التصميم -->
+    <link rel="stylesheet" href="src/modern-ui.css">
+    <link rel="stylesheet" href="src/workflow-system.css">
+    
+    <!-- 🎨 تصميم مخصص للصفحة -->
+    <style>
+        /* 
+        📱 تصميم الصفحة الرئيسي
+        ========================
+        تصميم مخصص لصفحة عرض نظام Workflow
+        */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 🎯 الحاوي الرئيسي للصفحة */
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* 📋 عنوان الصفحة */
+        .page-header {
+            background: rgba(45, 55, 72, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #4a5568;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #19c37d;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #19c37d, #4fd1c7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(25, 195, 125, 0.3);
+        }
+        
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #a0aec0;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #19c37d;
+            background: rgba(25, 195, 125, 0.1);
+        }
+        
+        .nav-link.active {
+            color: #19c37d;
+            background: rgba(25, 195, 125, 0.2);
+        }
+        
+        /* 🎯 المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* 📊 قسم المقدمة */
+        .intro-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .intro-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #19c37d, #4fd1c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .intro-subtitle {
+            font-size: 20px;
+            color: #a0aec0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .intro-description {
+            font-size: 16px;
+            color: #cbd5e0;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        /* 🎨 بطاقات الميزات */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .feature-card {
+            background: rgba(45, 55, 72, 0.6);
+            border: 1px solid #4a5568;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #19c37d;
+            box-shadow: 0 10px 30px rgba(25, 195, 125, 0.2);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #19c37d, #4fd1c7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(25, 195, 125, 0.3);
+        }
+        
+        .feature-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .feature-description {
+            color: #a0aec0;
+            line-height: 1.6;
+        }
+        
+        /* 🎬 منطقة العرض التوضيحي */
+        .demo-section {
+            margin: 60px 0;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .demo-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .demo-subtitle {
+            font-size: 16px;
+            color: #a0aec0;
+            margin-bottom: 30px;
+        }
+        
+        /* 🎯 حاوي نظام Workflow */
+        #workflow-container {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid #4a5568;
+            border-radius: 16px;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 900px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* 📱 تصميم متجاوب */
+        @media (max-width: 768px) {
+            .intro-title {
+                font-size: 36px;
+            }
+            
+            .intro-subtitle {
+                font-size: 18px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .main-content {
+                padding: 20px 15px;
+            }
+        }
+        
+        /* 🎨 تأثيرات الخلفية */
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(25, 195, 125, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .bg-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .bg-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 7s;
+        }
+        
+        .bg-circle:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 14s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+        
+        /* 🎯 أزرار التحكم المحسنة */
+        .control-panel {
+            background: rgba(45, 55, 72, 0.8);
+            border: 1px solid #4a5568;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .control-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #19c37d, #16a085);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(25, 195, 125, 0.3);
+        }
+        
+        .control-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .control-btn.secondary {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+        }
+        
+        .control-btn.secondary:hover {
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 🎨 تأثيرات الخلفية -->
+    <div class="background-effects">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <!-- 📱 الحاوي الرئيسي للصفحة -->
+    <div class="page-container">
+        
+        <!-- 📋 عنوان الصفحة -->
+        <header class="page-header">
+            <div class="header-content">
+                <!-- 🎯 الشعار -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                        </svg>
+                    </div>
+                    CodeMind AI Pro
+                </div>
+                
+                <!-- 🔗 روابط التنقل -->
+                <nav class="nav-links">
+                    <a href="professional-index.html" class="nav-link">الرئيسية</a>
+                    <a href="workflow-demo.html" class="nav-link active">نظام Workflow</a>
+                    <a href="#" class="nav-link">المشاريع</a>
+                    <a href="#" class="nav-link">الإعدادات</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- 🎯 المحتوى الرئيسي -->
+        <main class="main-content">
+            
+            <!-- 📊 قسم المقدمة -->
+            <section class="intro-section">
+                <h1 class="intro-title">🤖 نظام Workflow الذكي</h1>
+                <p class="intro-subtitle">عرض عمودي تفاعلي للخطوات مع الوكيل الذكي المتقدم</p>
+                <p class="intro-description">
+                    نظام متطور لعرض سير العمل بشكل تفاعلي وواقعي. يُظهر كل خطوة من خطوات المشروع 
+                    مع حالات مختلفة للوكيل الذكي، تأثيرات بصرية متقدمة، وأزرار تحكم جميلة وعملية.
+                </p>
+            </section>
+
+            <!-- 🎨 بطاقات الميزات -->
+            <section class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">عرض عمودي تفاعلي</h3>
+                    <p class="feature-description">
+                        نظام عرض عمودي للخطوات مع تأثيرات بصرية متقدمة وحركات سلسة
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">وكيل ذكي متحرك</h3>
+                    <p class="feature-description">
+                        شخصية ذكية تُظهر حالات مختلفة: التفكير، العمل، الإكمال مع حركات واقعية
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">أزرار تحكم متقدمة</h3>
+                    <p class="feature-description">
+                        أزرار جميلة مع أيقونات SVG حقيقية وتأثيرات تفاعلية متطورة
+                    </p>
+                </div>
+            </section>
+
+            <!-- 🎬 لوحة التحكم -->
+            <section class="control-panel">
+                <h3 class="control-title">🎮 لوحة التحكم السريع</h3>
+                <div class="control-buttons">
+                    <button class="control-btn" onclick="window.workflowSystem?.startWorkflow()">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5,3 19,12 5,21"/>
+                        </svg>
+                        تشغيل العرض التوضيحي
+                    </button>
+                    
+                    <button class="control-btn secondary" onclick="window.workflowSystem?.pauseWorkflow()">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="6" y="4" width="4" height="16"/>
+                            <rect x="14" y="4" width="4" height="16"/>
+                        </svg>
+                        إيقاف مؤقت
+                    </button>
+                    
+                    <button class="control-btn secondary" onclick="window.workflowSystem?.resetWorkflow()">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                            <path d="M21 3v5h-5"/>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                            <path d="M8 16H3v5"/>
+                        </svg>
+                        إعادة تعيين
+                    </button>
+                    
+                    <a href="professional-index.html" class="control-btn secondary">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                        </svg>
+                        العودة للرئيسية
+                    </a>
+                </div>
+            </section>
+
+            <!-- 🎯 منطقة العرض التوضيحي -->
+            <section class="demo-section">
+                <div class="demo-header">
+                    <h2 class="demo-title">🎬 العرض التوضيحي المباشر</h2>
+                    <p class="demo-subtitle">
+                        شاهد نظام Workflow يعمل خطوة بخطوة مع الوكيل الذكي
+                    </p>
+                </div>
+                
+                <!-- 🤖 حاوي نظام Workflow -->
+                <div id="workflow-container" class="workflow-container">
+                    <!-- سيتم إنشاء المحتوى تلقائياً بواسطة JavaScript -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- 📜 ملفات JavaScript -->
+    <script src="src/workflow-system.js"></script>
+    
+    <!-- 🎯 سكريبت إضافي للصفحة -->
+    <script>
+        /*
+        =================================================================
+        🎯 سكريبت إضافي لصفحة عرض نظام Workflow
+        =================================================================
+        يحتوي على وظائف إضافية لتحسين تجربة المستخدم
+        =================================================================
+        */
+        
+        /**
+         * 🚀 تهيئة الصفحة عند التحميل
+         * =============================
+         * يُضيف تأثيرات إضافية ووظائف تفاعلية
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🌟 تحميل صفحة عرض نظام Workflow...');
+            
+            // إضافة تأثيرات الحركة للعناصر
+            addScrollAnimations();
+            
+            // إضافة تأثيرات الماوس
+            addMouseEffects();
+            
+            // إضافة اختصارات لوحة المفاتيح
+            addKeyboardShortcuts();
+            
+            console.log('✅ تم تحميل الصفحة بنجاح!');
+        });
+        
+        /**
+         * 🎨 إضافة تأثيرات الحركة عند التمرير
+         * ====================================
+         * يُضيف تأثيرات ظهور العناصر عند التمرير
+         */
+        function addScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            // مراقبة بطاقات الميزات
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease-out';
+                observer.observe(card);
+            });
+        }
+        
+        /**
+         * 🖱️ إضافة تأثيرات الماوس
+         * ========================
+         * يُضيف تأثيرات تفاعلية عند حركة الماوس
+         */
+        function addMouseEffects() {
+            // تأثير تتبع الماوس للخلفية
+            document.addEventListener('mousemove', (e) => {
+                const circles = document.querySelectorAll('.bg-circle');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                circles.forEach((circle, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const xPos = x * speed * 20;
+                    const yPos = y * speed * 20;
+                    
+                    circle.style.transform = `translate(${xPos}px, ${yPos}px)`;
+                });
+            });
+            
+            // تأثير النقر على الأزرار
+            document.querySelectorAll('.control-btn, .workflow-action-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // إنشاء تأثير الموجة
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // إضافة CSS للتأثير
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        /**
+         * ⌨️ إضافة اختصارات لوحة المفاتيح
+         * ===============================
+         * يُضيف اختصارات سريعة للتحكم في النظام
+         */
+        function addKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // تجاهل الاختصارات إذا كان المستخدم يكتب
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+                
+                switch(e.key) {
+                    case ' ': // مسطرة المسافة - تشغيل/إيقاف
+                        e.preventDefault();
+                        if (window.workflowSystem) {
+                            if (window.workflowSystem.isRunning) {
+                                window.workflowSystem.pauseWorkflow();
+                            } else {
+                                window.workflowSystem.startWorkflow();
+                            }
+                        }
+                        break;
+                        
+                    case 'r': // R - إعادة تعيين
+                        if (e.ctrlKey || e.metaKey) {
+                            e.preventDefault();
+                            window.workflowSystem?.resetWorkflow();
+                        }
+                        break;
+                        
+                    case 'h': // H - العودة للرئيسية
+                        if (e.ctrlKey || e.metaKey) {
+                            e.preventDefault();
+                            window.location.href = 'professional-index.html';
+                        }
+                        break;
+                        
+                    case 'Escape': // Escape - إيقاف
+                        window.workflowSystem?.pauseWorkflow();
+                        break;
+                }
+            });
+            
+            // عرض تلميح الاختصارات
+            console.log(`
+🎮 اختصارات لوحة المفاتيح:
+• مسطرة المسافة: تشغيل/إيقاف
+• Ctrl+R: إعادة تعيين
+• Ctrl+H: العودة للرئيسية
+• Escape: إيقاف
+            `);
+        }
+        
+        /**
+         * 🎯 وظائف إضافية للتحكم
+         * ========================
+         * وظائف مساعدة لتحسين التجربة
+         */
+        
+        // إضافة مشروع مخصص
+        function addCustomProject() {
+            if (!window.workflowSystem) return;
+            
+            const customSteps = [
+                {
+                    title: 'تحليل الطلب',
+                    description: 'فهم وتحليل طلب المستخدم بدقة',
+                    icon: 'analyzing',
+                    duration: 2000
+                },
+                {
+                    title: 'البحث والاستكشاف',
+                    description: 'البحث عن أفضل الحلول والتقنيات',
+                    icon: 'thinking',
+                    duration: 3000
+                },
+                {
+                    title: 'التطوير والبناء',
+                    description: 'بناء الحل المطلوب بأعلى جودة',
+                    icon: 'coding',
+                    duration: 4000
+                },
+                {
+                    title: 'الاختبار والتحقق',
+                    description: 'اختبار شامل للتأكد من الجودة',
+                    icon: 'testing',
+                    duration: 2500
+                }
+            ];
+            
+            // مسح الخطوات الحالية
+            window.workflowSystem.steps = [];
+            document.getElementById('workflow-steps').innerHTML = '';
+            
+            // إضافة الخطوات الجديدة
+            customSteps.forEach(step => {
+                window.workflowSystem.addStep(step);
+            });
+            
+            console.log('✅ تم إضافة مشروع مخصص!');
+        }
+        
+        // تصدير الوظائف للاستخدام العام
+        window.addCustomProject = addCustomProject;
+    </script>
+</body>
+</html>

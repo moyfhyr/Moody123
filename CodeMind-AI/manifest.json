@@ -1,0 +1,161 @@
+{
+  "name": "CodeMind AI - الوكيل الذكي",
+  "short_name": "CodeMind AI",
+  "description": "🤖 وكيل ذكاء اصطناعي متقدم للتصفح والبرمجة",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f23",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["productivity", "developer", "ai"],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "CodeMind AI على سطح المكتب"
+    },
+    {
+      "src": "/assets/images/screenshot-mobile.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "CodeMind AI على الهاتف"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "إنشاء مشروع جديد",
+      "short_name": "مشروع جديد",
+      "description": "إنشاء مشروع برمجي جديد",
+      "url": "/?action=new-project",
+      "icons": [
+        {
+          "src": "/assets/icons/shortcut-new-project.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "فتح المتصفح",
+      "short_name": "متصفح",
+      "description": "فتح المتصفح المدمج",
+      "url": "/?action=open-browser",
+      "icons": [
+        {
+          "src": "/assets/icons/shortcut-browser.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "الإعدادات",
+      "short_name": "إعدادات",
+      "description": "فتح لوحة الإعدادات",
+      "url": "/?action=settings",
+      "icons": [
+        {
+          "src": "/assets/icons/shortcut-settings.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://codemind-ai.vercel.app/manifest.json"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "capture_links": "existing-client-navigate",
+  "protocol_handlers": [
+    {
+      "protocol": "web+codemind",
+      "url": "/?protocol=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "text/html": [".html", ".htm"],
+        "text/css": [".css"],
+        "text/javascript": [".js"],
+        "application/json": [".json"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

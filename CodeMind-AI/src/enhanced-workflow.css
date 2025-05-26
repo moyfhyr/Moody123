@@ -1,0 +1,637 @@
+/*
+=================================================================
+🎨 تصميم نظام Workflow المحسن داخل الدردشة
+=================================================================
+تصميم احترافي مثل ChatGPT مع نظام Workflow متكامل
+جميع الأزرار تعمل بشكل حقيقي مع تأثيرات بصرية جميلة
+=================================================================
+*/
+
+/* 
+🎯 حاوي Workflow داخل الدردشة
+===============================
+يظهر نظام Workflow بشكل مدمج في واجهة الدردشة
+*/
+.workflow-container-chat {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    margin: 16px 0;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.workflow-container-chat:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    border-color: var(--accent-green);
+}
+
+/* 
+📋 عنوان Workflow
+==================
+عنوان وحالة نظام Workflow
+*/
+.workflow-header-chat {
+    background: linear-gradient(135deg, var(--accent-green), #16a085);
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.workflow-title-chat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.workflow-title-chat svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    animation: workflow-spin 2s linear infinite;
+}
+
+@keyframes workflow-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.workflow-status-chat {
+    font-size: 14px;
+    opacity: 0.9;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* 
+📋 منطقة خطوات Workflow
+========================
+تحتوي على جميع خطوات العمل
+*/
+.workflow-steps-chat {
+    padding: 20px;
+    background: var(--bg-primary);
+}
+
+/* 
+🔧 خطوة واحدة في Workflow
+===========================
+تصميم كل خطوة منفردة
+*/
+.workflow-step-chat {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.workflow-step-chat:last-child {
+    margin-bottom: 0;
+}
+
+/* تأثير الضوء المتحرك */
+.workflow-step-chat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(25, 195, 125, 0.1),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.workflow-step-chat:hover::before {
+    left: 100%;
+}
+
+/* 
+🎯 أيقونة الخطوة
+================
+دائرة ملونة مع أيقونة SVG
+*/
+.workflow-step-icon-chat {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.workflow-step-icon-chat svg {
+    width: 16px;
+    height: 16px;
+    fill: white;
+    transition: all 0.3s ease;
+}
+
+/* 
+📝 محتوى الخطوة
+================
+العنوان والوصف والحالة
+*/
+.workflow-step-content-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.workflow-step-title-chat {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.workflow-step-desc-chat {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.workflow-step-status-chat {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    width: fit-content;
+    transition: all 0.3s ease;
+}
+
+/* 
+🎨 حالات مختلفة للخطوات
+==========================
+ألوان وتأثيرات حسب حالة كل خطوة
+*/
+
+/* خطوة في الانتظار */
+.workflow-step-chat.pending {
+    opacity: 0.7;
+}
+
+.workflow-step-chat.pending .workflow-step-icon-chat {
+    background: #6b7280;
+    box-shadow: 0 2px 8px rgba(107, 114, 128, 0.2);
+}
+
+.workflow-step-chat.pending .workflow-step-status-chat {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+}
+
+/* خطوة نشطة (قيد التنفيذ) */
+.workflow-step-chat.active {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, var(--bg-secondary), rgba(59, 130, 246, 0.05));
+    transform: translateX(4px);
+}
+
+.workflow-step-chat.active .workflow-step-icon-chat {
+    background: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    animation: workflow-pulse 2s infinite;
+}
+
+.workflow-step-chat.active .workflow-step-status-chat {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    animation: workflow-blink 1.5s infinite;
+}
+
+@keyframes workflow-pulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    }
+}
+
+@keyframes workflow-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* خطوة مكتملة */
+.workflow-step-chat.completed {
+    border-color: var(--accent-green);
+    background: linear-gradient(135deg, var(--bg-secondary), rgba(25, 195, 125, 0.05));
+}
+
+.workflow-step-chat.completed .workflow-step-icon-chat {
+    background: var(--accent-green);
+    box-shadow: 0 4px 12px rgba(25, 195, 125, 0.3);
+}
+
+.workflow-step-chat.completed .workflow-step-status-chat {
+    background: rgba(25, 195, 125, 0.1);
+    color: var(--accent-green);
+}
+
+.workflow-step-chat.completed .workflow-step-title-chat {
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+/* خطوة بها خطأ */
+.workflow-step-chat.error {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, var(--bg-secondary), rgba(239, 68, 68, 0.05));
+}
+
+.workflow-step-chat.error .workflow-step-icon-chat {
+    background: #ef4444;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.workflow-step-chat.error .workflow-step-status-chat {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+/* 
+🎬 تحسينات الوكيل الذكي
+========================
+تحسينات لحالات الوكيل المختلفة
+*/
+.ai-assistant-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-assistant-float:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* حالات مختلفة للوكيل */
+.ai-assistant-float.thinking {
+    background: #3b82f6;
+    animation: thinking-pulse 1.5s ease-in-out infinite;
+}
+
+.ai-assistant-float.working {
+    background: #f59e0b;
+    animation: working-spin 2s linear infinite;
+}
+
+.ai-assistant-float.analyzing {
+    background: #8b5cf6;
+    animation: analyzing-wave 2s ease-in-out infinite;
+}
+
+.ai-assistant-float.coding {
+    background: #06b6d4;
+    animation: coding-blink 1s ease-in-out infinite;
+}
+
+.ai-assistant-float.testing {
+    background: #84cc16;
+    animation: testing-bounce 1.5s ease-in-out infinite;
+}
+
+.ai-assistant-float.completed {
+    background: var(--accent-green);
+    animation: completed-success 0.5s ease-out;
+}
+
+/* حركات الوكيل */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes thinking-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes working-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes analyzing-wave {
+    0%, 100% { border-radius: 50%; }
+    25% { border-radius: 40% 60% 40% 60%; }
+    50% { border-radius: 60% 40% 60% 40%; }
+    75% { border-radius: 40% 60% 40% 60%; }
+}
+
+@keyframes coding-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes testing-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes completed-success {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* 
+🎨 تحسينات الرسائل
+===================
+تحسينات لعرض الرسائل والمحتوى
+*/
+.message.assistant .message-text {
+    line-height: 1.6;
+}
+
+.message.assistant .message-text strong {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.message.assistant .message-text code {
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-green);
+    border: 1px solid var(--border-light);
+}
+
+.message.assistant .message-text pre {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+    overflow-x: auto;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.message.assistant .message-text pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+/* 
+📱 تصميم متجاوب
+=================
+تحسينات للشاشات الصغيرة
+*/
+@media (max-width: 768px) {
+    .workflow-container-chat {
+        margin: 12px 0;
+    }
+    
+    .workflow-header-chat {
+        padding: 12px 16px;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .workflow-steps-chat {
+        padding: 16px;
+    }
+    
+    .workflow-step-chat {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .workflow-step-icon-chat {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+    }
+    
+    .workflow-step-icon-chat svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .workflow-step-title-chat {
+        font-size: 14px;
+    }
+    
+    .workflow-step-desc-chat {
+        font-size: 12px;
+    }
+    
+    .ai-assistant-float {
+        width: 48px;
+        height: 48px;
+        bottom: 16px;
+        right: 16px;
+        font-size: 20px;
+    }
+}
+
+/* 
+🎯 تحسينات إضافية
+==================
+تحسينات بصرية متقدمة
+*/
+
+/* تأثير التدرج للخطوات المكتملة */
+.workflow-step-chat.completed::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    color: var(--accent-green);
+    font-size: 18px;
+    font-weight: bold;
+    opacity: 0;
+    animation: checkmark-appear 0.5s ease-out 0.3s forwards;
+}
+
+@keyframes checkmark-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+/* تأثير الخطأ للخطوات الفاشلة */
+.workflow-step-chat.error::after {
+    content: '✗';
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    color: #ef4444;
+    font-size: 18px;
+    font-weight: bold;
+    opacity: 0;
+    animation: error-appear 0.5s ease-out 0.3s forwards;
+}
+
+@keyframes error-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+/* تأثير التحميل للخطوات النشطة */
+.workflow-step-chat.active .workflow-step-icon-chat::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid transparent;
+    border-top: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: loading-spin 1s linear infinite;
+}
+
+@keyframes loading-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 
+🎨 تحسينات الثيم الفاتح
+========================
+تحسينات خاصة بالثيم الفاتح
+*/
+[data-theme="light"] .workflow-container-chat {
+    background: #ffffff;
+    border-color: #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .workflow-step-chat {
+    background: #f9fafb;
+    border-color: #e5e7eb;
+}
+
+[data-theme="light"] .workflow-step-chat:hover {
+    background: #f3f4f6;
+}
+
+[data-theme="light"] .message.assistant .message-text pre {
+    background: #f9fafb;
+    border-color: #e5e7eb;
+}
+
+[data-theme="light"] .message.assistant .message-text code {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+/* 
+🎯 تأثيرات خاصة
+================
+تأثيرات بصرية متقدمة
+*/
+
+/* تأثير الموجة عند اكتمال Workflow */
+.workflow-container-chat.completed {
+    animation: workflow-complete-wave 1s ease-out;
+}
+
+@keyframes workflow-complete-wave {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* تأثير الاهتزاز عند الخطأ */
+.workflow-step-chat.error {
+    animation: error-shake 0.5s ease-in-out;
+}
+
+@keyframes error-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* تأثير الظهور التدريجي للخطوات */
+.workflow-step-chat {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: step-appear 0.5s ease-out forwards;
+}
+
+.workflow-step-chat:nth-child(1) { animation-delay: 0.1s; }
+.workflow-step-chat:nth-child(2) { animation-delay: 0.2s; }
+.workflow-step-chat:nth-child(3) { animation-delay: 0.3s; }
+.workflow-step-chat:nth-child(4) { animation-delay: 0.4s; }
+.workflow-step-chat:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes step-appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

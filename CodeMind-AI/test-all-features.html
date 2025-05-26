@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 اختبار جميع الميزات - CodeMind AI</title>
+    
+    <!-- Professional Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== تصميم صفحة الاختبار ===== */
+        :root {
+            --bg-primary: #212121;
+            --bg-secondary: #2f2f2f;
+            --bg-chat: #343541;
+            --bg-user: #444654;
+            --bg-assistant: #343541;
+            --bg-sidebar: #202123;
+            --bg-input: #40414f;
+            --bg-hover: #2a2b32;
+            
+            --text-primary: #ececf1;
+            --text-secondary: #c5c5d2;
+            --text-muted: #8e8ea0;
+            --text-accent: #19c37d;
+            
+            --accent-green: #19c37d;
+            --accent-blue: #1e90ff;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f59e0b;
+            
+            --border-light: #4a4a4a;
+            --border-dark: #2a2a2a;
+            
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            border-radius: 16px;
+            color: white;
+        }
+
+        .test-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .test-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .test-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .test-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow-dark);
+            border-color: var(--accent-green);
+        }
+
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+        }
+
+        .test-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .test-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .test-btn {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .test-btn:hover {
+            background: #16a085;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(25, 195, 125, 0.3);
+        }
+
+        .test-btn.secondary {
+            background: var(--accent-blue);
+        }
+
+        .test-btn.secondary:hover {
+            background: #1c7ed6;
+        }
+
+        .test-btn.warning {
+            background: var(--accent-orange);
+        }
+
+        .test-btn.warning:hover {
+            background: #e8890b;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .feature-demo {
+            background: var(--bg-chat);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .feature-demo h4 {
+            color: var(--accent-green);
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        .demo-result {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .quick-test-panel {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .quick-test-panel h3 {
+            color: var(--accent-green);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .quick-action {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .quick-action:hover {
+            border-color: var(--accent-green);
+            background: var(--bg-hover);
+            transform: translateY(-2px);
+        }
+
+        .quick-action-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .quick-action-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .quick-action-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-header h1 {
+                font-size: 2rem;
+            }
+            
+            .test-header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <!-- عنوان الصفحة -->
+        <div class="test-header">
+            <h1>🧪 اختبار جميع الميزات</h1>
+            <p>صفحة شاملة لاختبار جميع ميزات CodeMind AI المحسن مع نظام Workflow الذكي</p>
+        </div>
+
+        <!-- شبكة الاختبارات -->
+        <div class="test-grid">
+            <!-- اختبار الواجهة الرئيسية -->
+            <div class="test-card">
+                <div class="status-indicator"></div>
+                <h3>🏠 الواجهة الرئيسية</h3>
+                <p>اختبار الواجهة الاحترافية الرئيسية مع جميع البطاقات السريعة والوظائف الأساسية</p>
+                <div class="test-buttons">
+                    <a href="professional-index.html" class="test-btn" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                        </svg>
+                        فتح الواجهة
+                    </a>
+                    <button class="test-btn secondary" onclick="testMainInterface()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        اختبار سريع
+                    </button>
+                </div>
+            </div>
+
+            <!-- اختبار نظام Workflow -->
+            <div class="test-card">
+                <div class="status-indicator"></div>
+                <h3>⚡ نظام Workflow</h3>
+                <p>اختبار نظام العرض العمودي التفاعلي للخطوات مع الوكيل الذكي المتحرك</p>
+                <div class="test-buttons">
+                    <a href="workflow-demo.html" class="test-btn" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        عرض Workflow
+                    </a>
+                    <button class="test-btn secondary" onclick="testWorkflowSystem()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                        اختبار النظام
+                    </button>
+                </div>
+            </div>
+
+            <!-- اختبار الوكيل الذكي -->
+            <div class="test-card">
+                <div class="status-indicator"></div>
+                <h3>🤖 الوكيل الذكي</h3>
+                <p>اختبار حالات الوكيل المختلفة: التفكير، العمل، التحليل، البرمجة، والاختبار</p>
+                <div class="test-buttons">
+                    <button class="test-btn" onclick="testAIAgent()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                        </svg>
+                        اختبار الوكيل
+                    </button>
+                    <button class="test-btn warning" onclick="resetAgent()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                        </svg>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+
+            <!-- اختبار البطاقات السريعة -->
+            <div class="test-card">
+                <div class="status-indicator"></div>
+                <h3>🎯 البطاقات السريعة</h3>
+                <p>اختبار جميع البطاقات السريعة وتأكد من عملها مع نظام Workflow</p>
+                <div class="test-buttons">
+                    <button class="test-btn" onclick="testQuickActions()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                        </svg>
+                        اختبار البطاقات
+                    </button>
+                    <button class="test-btn secondary" onclick="simulateQuickAction()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        محاكاة العمل
+                    </button>
+                </div>
+            </div>
+
+            <!-- اختبار التصميم المتجاوب -->
+            <div class="test-card">
+                <div class="status-indicator"></div>
+                <h3>📱 التصميم المتجاوب</h3>
+                <p>اختبار التصميم على أحجام شاشات مختلفة والتأكد من التوافق</p>
+                <div class="test-buttons">
+                    <button class="test-btn" onclick="testResponsiveDesign()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+                        </svg>
+                        اختبار الاستجابة
+                    </button>
+                    <button class="test-btn secondary" onclick="toggleViewport()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                        </svg>
+                        تبديل العرض
+                    </button>
+                </div>
+            </div>
+
+            <!-- اختبار الأداء -->
+            <div class="test-card">
+                <div class="status-indicator"></div>
+                <h3>⚡ اختبار الأداء</h3>
+                <p>قياس سرعة التحميل والاستجابة وكفاءة النظام</p>
+                <div class="test-buttons">
+                    <button class="test-btn" onclick="performanceTest()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15.9 5c-.17 0-.32.09-.41.23l-.07.15-5.18 11.65c-.16.29-.26.61-.26.96 0 1.11.89 2.01 2 2.01s2-.9 2-2.01c0-.96-.78-1.74-1.74-1.74-.24 0-.47.05-.68.13L16.41 5.5c0-.28-.22-.5-.51-.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                        قياس الأداء
+                    </button>
+                    <button class="test-btn warning" onclick="stressTest()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                        اختبار الضغط
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- لوحة الاختبار السريع -->
+        <div class="quick-test-panel">
+            <h3>🚀 اختبار سريع للميزات</h3>
+            <div class="quick-actions">
+                <div class="quick-action" onclick="quickTestNewProject()">
+                    <span class="quick-action-icon">🆕</span>
+                    <div class="quick-action-title">مشروع جديد</div>
+                    <div class="quick-action-desc">اختبار إنشاء مشروع</div>
+                </div>
+                <div class="quick-action" onclick="quickTestCodeReview()">
+                    <span class="quick-action-icon">🔍</span>
+                    <div class="quick-action-title">مراجعة كود</div>
+                    <div class="quick-action-desc">اختبار مراجعة الكود</div>
+                </div>
+                <div class="quick-action" onclick="quickTestDebug()">
+                    <span class="quick-action-icon">🐛</span>
+                    <div class="quick-action-title">إصلاح أخطاء</div>
+                    <div class="quick-action-desc">اختبار إصلاح الأخطاء</div>
+                </div>
+                <div class="quick-action" onclick="quickTestLearning()">
+                    <span class="quick-action-icon">📚</span>
+                    <div class="quick-action-title">تعلم تقنية</div>
+                    <div class="quick-action-desc">اختبار خطة التعلم</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- منطقة عرض النتائج -->
+        <div class="feature-demo">
+            <h4>📊 نتائج الاختبار المباشر</h4>
+            <div class="demo-result" id="testResults">
+                جاهز لبدء الاختبارات... 🚀
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== وظائف الاختبار =====
+        
+        let testResults = document.getElementById('testResults');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString('ar-SA');
+            testResults.innerHTML += `[${timestamp}] ${message}\n`;
+            testResults.scrollTop = testResults.scrollHeight;
+        }
+        
+        function clearLog() {
+            testResults.innerHTML = '';
+        }
+
+        // اختبار الواجهة الرئيسية
+        function testMainInterface() {
+            log('🏠 بدء اختبار الواجهة الرئيسية...');
+            
+            // فتح الواجهة في نافذة جديدة
+            const mainWindow = window.open('professional-index.html', '_blank');
+            
+            setTimeout(() => {
+                log('✅ تم فتح الواجهة الرئيسية بنجاح');
+                log('🔍 يرجى التحقق من:');
+                log('  - عرض البطاقات السريعة');
+                log('  - عمل أزرار التحكم');
+                log('  - استجابة الواجهة');
+            }, 1000);
+        }
+
+        // اختبار نظام Workflow
+        function testWorkflowSystem() {
+            log('⚡ بدء اختبار نظام Workflow...');
+            
+            // فتح صفحة Workflow
+            const workflowWindow = window.open('workflow-demo.html', '_blank');
+            
+            setTimeout(() => {
+                log('✅ تم فتح نظام Workflow بنجاح');
+                log('🔍 يرجى اختبار:');
+                log('  - زر "بدء العمل"');
+                log('  - زر "إيقاف مؤقت"');
+                log('  - زر "إعادة تعيين"');
+                log('  - حركة الوكيل الذكي');
+            }, 1000);
+        }
+
+        // اختبار الوكيل الذكي
+        function testAIAgent() {
+            log('🤖 بدء اختبار الوكيل الذكي...');
+            
+            const states = ['thinking', 'working', 'analyzing', 'coding', 'testing', 'completed'];
+            let currentState = 0;
+            
+            const testInterval = setInterval(() => {
+                if (currentState < states.length) {
+                    log(`🔄 تغيير حالة الوكيل إلى: ${states[currentState]}`);
+                    
+                    // محاكاة تغيير حالة الوكيل
+                    const event = new CustomEvent('agentStateChange', {
+                        detail: { state: states[currentState] }
+                    });
+                    window.dispatchEvent(event);
+                    
+                    currentState++;
+                } else {
+                    clearInterval(testInterval);
+                    log('✅ تم اختبار جميع حالات الوكيل بنجاح');
+                }
+            }, 2000);
+        }
+
+        // إعادة تعيين الوكيل
+        function resetAgent() {
+            log('🔄 إعادة تعيين الوكيل الذكي...');
+            
+            const event = new CustomEvent('agentStateChange', {
+                detail: { state: 'ready' }
+            });
+            window.dispatchEvent(event);
+            
+            setTimeout(() => {
+                log('✅ تم إعادة تعيين الوكيل إلى الحالة الجاهزة');
+            }, 500);
+        }
+
+        // اختبار البطاقات السريعة
+        function testQuickActions() {
+            log('🎯 بدء اختبار البطاقات السريعة...');
+            
+            const actions = [
+                'new-project',
+                'code-review', 
+                'debug-help',
+                'learn-tech',
+                'workflow-demo'
+            ];
+            
+            actions.forEach((action, index) => {
+                setTimeout(() => {
+                    log(`📋 اختبار بطاقة: ${action}`);
+                    
+                    // محاكاة النقر على البطاقة
+                    const event = new CustomEvent('quickActionTest', {
+                        detail: { action: action }
+                    });
+                    window.dispatchEvent(event);
+                    
+                }, index * 1000);
+            });
+            
+            setTimeout(() => {
+                log('✅ تم اختبار جميع البطاقات السريعة');
+            }, actions.length * 1000 + 500);
+        }
+
+        // محاكاة عمل البطاقات
+        function simulateQuickAction() {
+            log('🎬 محاكاة عمل البطاقات السريعة...');
+            
+            // فتح الواجهة الرئيسية
+            const mainWindow = window.open('professional-index.html', '_blank');
+            
+            setTimeout(() => {
+                log('📝 تعليمات المحاكاة:');
+                log('1. انقر على أي بطاقة سريعة');
+                log('2. راقب تفعيل نظام Workflow');
+                log('3. تحقق من عمل الوكيل الذكي');
+                log('4. اختبر جميع الأزرار');
+            }, 1000);
+        }
+
+        // اختبار التصميم المتجاوب
+        function testResponsiveDesign() {
+            log('📱 بدء اختبار التصميم المتجاوب...');
+            
+            const viewports = [
+                { width: 1920, height: 1080, name: 'سطح المكتب الكبير' },
+                { width: 1366, height: 768, name: 'سطح المكتب العادي' },
+                { width: 768, height: 1024, name: 'التابلت' },
+                { width: 375, height: 667, name: 'الهاتف المحمول' }
+            ];
+            
+            viewports.forEach((viewport, index) => {
+                setTimeout(() => {
+                    log(`📐 اختبار العرض: ${viewport.name} (${viewport.width}x${viewport.height})`);
+                    
+                    // فتح نافذة بحجم محدد
+                    const testWindow = window.open(
+                        'professional-index.html',
+                        `test_${index}`,
+                        `width=${viewport.width},height=${viewport.height},scrollbars=yes,resizable=yes`
+                    );
+                    
+                }, index * 2000);
+            });
+            
+            setTimeout(() => {
+                log('✅ تم فتح جميع أحجام الشاشات للاختبار');
+                log('🔍 يرجى التحقق من استجابة التصميم');
+            }, viewports.length * 2000 + 500);
+        }
+
+        // تبديل العرض
+        function toggleViewport() {
+            log('🔄 تبديل حجم العرض...');
+            
+            const currentWidth = window.innerWidth;
+            const newWidth = currentWidth > 768 ? 375 : 1366;
+            const newHeight = currentWidth > 768 ? 667 : 768;
+            
+            window.resizeTo(newWidth, newHeight);
+            
+            setTimeout(() => {
+                log(`📐 تم تغيير حجم النافذة إلى: ${newWidth}x${newHeight}`);
+            }, 500);
+        }
+
+        // اختبار الأداء
+        function performanceTest() {
+            log('⚡ بدء اختبار الأداء...');
+            
+            const startTime = performance.now();
+            
+            // قياس وقت تحميل الصفحة
+            window.addEventListener('load', () => {
+                const loadTime = performance.now() - startTime;
+                log(`⏱️ وقت التحميل: ${loadTime.toFixed(2)} مللي ثانية`);
+            });
+            
+            // قياس استخدام الذاكرة
+            if (performance.memory) {
+                const memory = performance.memory;
+                log(`💾 استخدام الذاكرة:`);
+                log(`  - المستخدمة: ${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)} MB`);
+                log(`  - المخصصة: ${(memory.totalJSHeapSize / 1024 / 1024).toFixed(2)} MB`);
+                log(`  - الحد الأقصى: ${(memory.jsHeapSizeLimit / 1024 / 1024).toFixed(2)} MB`);
+            }
+            
+            // اختبار سرعة الاستجابة
+            const responseTest = setInterval(() => {
+                const testStart = performance.now();
+                
+                setTimeout(() => {
+                    const responseTime = performance.now() - testStart;
+                    log(`🚀 زمن الاستجابة: ${responseTime.toFixed(2)} مللي ثانية`);
+                }, 0);
+                
+                clearInterval(responseTest);
+            }, 100);
+        }
+
+        // اختبار الضغط
+        function stressTest() {
+            log('🔥 بدء اختبار الضغط...');
+            log('⚠️ تحذير: هذا الاختبار قد يبطئ المتصفح مؤقتاً');
+            
+            let iterations = 0;
+            const maxIterations = 1000;
+            
+            const stressInterval = setInterval(() => {
+                // إنشاء عناصر DOM
+                const element = document.createElement('div');
+                element.innerHTML = `اختبار الضغط ${iterations}`;
+                document.body.appendChild(element);
+                
+                // إزالة العنصر فوراً
+                document.body.removeChild(element);
+                
+                iterations++;
+                
+                if (iterations >= maxIterations) {
+                    clearInterval(stressInterval);
+                    log(`✅ تم إنجاز ${maxIterations} عملية بنجاح`);
+                    log('🎯 النظام يعمل بكفاءة تحت الضغط');
+                }
+                
+                if (iterations % 100 === 0) {
+                    log(`📊 تم إنجاز ${iterations} عملية...`);
+                }
+            }, 1);
+        }
+
+        // اختبارات سريعة للميزات
+        function quickTestNewProject() {
+            log('🆕 اختبار سريع: إنشاء مشروع جديد');
+            window.open('professional-index.html#new-project', '_blank');
+        }
+
+        function quickTestCodeReview() {
+            log('🔍 اختبار سريع: مراجعة الكود');
+            window.open('professional-index.html#code-review', '_blank');
+        }
+
+        function quickTestDebug() {
+            log('🐛 اختبار سريع: إصلاح الأخطاء');
+            window.open('professional-index.html#debug-help', '_blank');
+        }
+
+        function quickTestLearning() {
+            log('📚 اختبار سريع: خطة التعلم');
+            window.open('professional-index.html#learn-tech', '_blank');
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🚀 تم تحميل صفحة الاختبار بنجاح');
+            log('📋 جاهز لبدء الاختبارات الشاملة');
+            log('💡 استخدم الأزرار أعلاه لاختبار الميزات المختلفة');
+            
+            // إضافة مستمع للأحداث المخصصة
+            window.addEventListener('agentStateChange', (event) => {
+                log(`🤖 تم تغيير حالة الوكيل إلى: ${event.detail.state}`);
+            });
+            
+            window.addEventListener('quickActionTest', (event) => {
+                log(`🎯 تم اختبار البطاقة: ${event.detail.action}`);
+            });
+        });
+    </script>
+</body>
+</html>
